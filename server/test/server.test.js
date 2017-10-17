@@ -104,7 +104,7 @@ describe('DELETE /todos/:id',()=>{
 			.delete(`/todos/${hexId}`)
 			.expect(200)
 			.expect((res)=>{
-				expect(res.body._id).toBe(hexId);
+				expect(res.body.body._id).toBe(hexId);
 			})
 			.end((err,res)=>{
 				if(err){
