@@ -1,4 +1,4 @@
-require('./config/config');
+require('../config/config');
 const _ =require('lodash');
 const express = require('express');
 const bodyParser = require ('body-parser');
@@ -10,7 +10,7 @@ var {User} = require('./models/user');
 
 
 var app = express();
-var port = process.env.PORT || 3000;
+var port = process.env.PORT ;
 
 app.use(bodyParser.json());
 
@@ -41,12 +41,7 @@ app.get('/todos/:id',(req,res)=>{
 	}).catch((e)=>{
 		res.status(404).send();
 	});
-	/*
-	Todo.find().then((todos)=>{
-		res.send({todos});
-	},(e)=>{
-		res.status(400).send(e);
-	});*/
+	
 });
 app.delete('/todos/:id',(req,res)=>{
 	var id = req.params.id;
@@ -81,6 +76,17 @@ app.patch('/todos/:id',(req,res)=>{
 		res.send({todo});
 	}).catch((e)=>{
 		res.status(404).send();
+	});
+});
+// POST /users
+app.post('/users',(req,res)=>{
+	var body = _.pick(req.body,['email','password']);
+	var user =new User(body);
+
+	user.save().then((user)=>{
+		res.send(user);
+	}).catch((e)=>{
+		res.status(400).send(e);
 	});
 });
 app.listen(port,()=>{
