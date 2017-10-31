@@ -16,16 +16,23 @@ const users= [{
 	},{
 	   _id: userTwoid,
 		email:'test@1234.cl',
-		password:'user2pass'
-	}];
+		password:'user2pass',
+		tokens : [{
+			access:'auth',
+			token :jwt.sign({_id:userTwoid,access:'auth'},'abc123').toString(),
+		}]
+	  }
+	];
 const todos= [{
 	_id:new ObjectID(),
-	text:'First test todo'
+	text:'First test todo',
+	_creator:userOneid
 	},{
 		_id: new ObjectID(),
 		text : 'Second test todo',
 		completed: true,
-		completedAt:333
+		completedAt:333,
+		_creator:userTwoid
 	}];
 
 const populateTodos = (done)=>{
